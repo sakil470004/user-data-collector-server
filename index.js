@@ -29,19 +29,19 @@ async function run() {
 
         // GET API
         //get all the medicine 
-        app.get('/medicine', async (req, res) => {
+        app.get('/user', async (req, res) => {
             const cursor = userCollection.find({});
-            const medicines = await cursor.toArray();
+            const users = await cursor.toArray();
             // console.log(comments)
-            res.json(medicines);
+            res.json(users);
         })
 
 
         // POST Api
         // upload a new medicine
-        app.post('/medicine', async (req, res) => {
-            const medicine = req.body;
-            const result = await userCollection.insertOne(medicine);
+        app.post('/user', async (req, res) => {
+            const user = req.body;
+            const result = await userCollection.insertOne(user);
             res.json(result)
             // res.json({message:'sakilhere'})
         })
@@ -51,7 +51,7 @@ async function run() {
 
         // Delete Api
         // delete one
-        app.delete('/medicine/:id', async (req, res) => {
+        app.delete('/user/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await userCollection.deleteOne(query);
@@ -67,7 +67,7 @@ async function run() {
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-    res.send('Hello freaking store management!')
+    res.send('Hello freaking user data collector!')
 })
 
 app.listen(port, () => {
