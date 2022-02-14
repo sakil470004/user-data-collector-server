@@ -16,15 +16,20 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 
 
+
 async function run() {
     try {
         await client.connect()
+        // userCollector Database
         const database = client.db('user_collector');
         const userCollection = database.collection('user-collection');
+        // newspaper database
+        const databaseNewspaperProject = client.db('newspaper_database');
+        const newsCollection = databaseNewspaperProject.collection('news');
 
 
 
-        console.log('your User Collector database running')
+        console.log('your User Collector and Newspaper database running')
 
 
         // GET API
@@ -58,6 +63,17 @@ async function run() {
             res.json(result);
         })
 
+
+        // Here go for newspaper app api
+        // -----------------------------------------//
+        // GET API
+        //get all the medicine 
+        app.get('/newspapers', async (req, res) => {
+            const cursor = newsCollection.find({});
+            const news = await cursor.toArray();
+            // console.log(comments)
+            res.json(news);
+        })
 
     } finally {
         // await client.close()
