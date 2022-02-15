@@ -74,7 +74,7 @@ async function run() {
             // console.log(comments)
             res.json(news);
         })
-         //GET Products API
+         //GET Newspaper according to page and size API
          app.get('/newspapers', async (req, res) => {
             const cursor = newsCollection.find({});
             const page = req.query.page;
