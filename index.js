@@ -68,12 +68,32 @@ async function run() {
         // -----------------------------------------//
         // GET API
         //get all the medicine 
-        app.get('/newspapers', async (req, res) => {
+        app.get('/newspapersAll', async (req, res) => {
             const cursor = newsCollection.find({});
             const news = await cursor.toArray();
             // console.log(comments)
             res.json(news);
         })
+         //GET Products API
+         app.get('/newspapers', async (req, res) => {
+            const cursor = newsCollection.find({});
+            const page = req.query.page;
+            const size = parseInt(req.query.size);
+            let news;
+            const count = await cursor.count();
+
+            if (page) {
+                news = await cursor.skip(page * size).limit(size).toArray();
+            }
+            else {
+                news = await cursor.toArray();
+            }
+
+            res.send({
+                count,
+                 news
+            });
+        });
 
     } finally {
         // await client.close()
