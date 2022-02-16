@@ -103,7 +103,7 @@ async function run() {
 run().catch(console.dir)
 
 app.get('/', (req, res) => {
-    res.send('Hello freaking user data collector!')
+    res.send('Hello freaking user data collector && Newspaper!')
 })
 
 app.listen(port, () => {
