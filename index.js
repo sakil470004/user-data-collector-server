@@ -74,8 +74,22 @@ async function run() {
             // console.log(comments)
             res.json(news);
         })
-         //GET Newspaper according to page and size API
-         app.get('/newspapers', async (req, res) => {
+        app.get('/newspapersSearch', async (req, res) => {
+            const cursor = newsCollection.find({});
+            const news = await cursor.toArray();
+
+            const searchField = req.query.searchField;
+            const searchBy = req.query.searchBy;
+
+            const ftNews = news.filter(nws => {
+                return  nws[searchBy].toLowerCase().includes(searchField.toLowerCase())
+            })
+            
+            res.json(ftNews);
+       
+     })
+        //GET Newspaper according to page and size API
+        app.get('/newspapers', async (req, res) => {
             const cursor = newsCollection.find({});
             const page = req.query.page;
             const size = parseInt(req.query.size);
@@ -91,7 +105,7 @@ async function run() {
 
             res.send({
                 count,
-                 news
+                news
             });
         });
 
